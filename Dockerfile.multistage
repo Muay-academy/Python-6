@@ -1,0 +1,25 @@
+# ---- Base python ----
+FROM python:3.9 AS base
+# Create app directory
+WORKDIR /python-docker
+RUN python -m venv /venv
+ENV PATH="/venv/venv/bin:$PATH"
+
+# ---- Dependencies ----
+FROM base AS requirements
+COPY requirements.txt requirements.txt
+#Install the requirements
+RUN pip3 install -r requirements.txt
+
+FROM requirements AS build  
+WORKDIR /python-docker
+
+FROM python:3.9.14-alpine3.16 AS release  
+WORKDIR /python-docker
+COPY --from=requirements /python-docker/requirements.txt ./
+RUN pip install -r requirements.txt
+RUN rm -rf /bin/*
+COPY . .
+EXPOSE 5000
+ENV PATH="/venv/venv/bin:$PATH"
+CMD ["python3","app.py" ,"--host=0.0.0.0"]
