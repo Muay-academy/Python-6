@@ -3,8 +3,9 @@
 # -- Create a new application from scratch -- ##
 1. Create a directory with a name "Flask-Docker-App"
    - mkdir Flask-Docker-Appp
-2. Navigate to newly created directory
+  2. Navigate to newly created directory
    - cd Flask-Docker-app
+   mkdir flask_app && cd flask_app
 3. Create a virtual environment
    - py -3 -m venv venv
 4. Activate the environment
